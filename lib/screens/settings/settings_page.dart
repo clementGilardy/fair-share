@@ -93,14 +93,11 @@ class _SettingsPageState extends State<SettingsPage> {
       await prefs.setDouble('revenu1', revenu1);
       await prefs.setDouble('revenu2', revenu2);
 
-      // Mettre à jour les valeurs originales
       _originalRevenu1 = _revenu1Controller.text;
       _originalRevenu2 = _revenu2Controller.text;
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Revenus sauvegardés avec succès')),
-        );
+        Navigator.of(context).pop();
       }
     }
   }
