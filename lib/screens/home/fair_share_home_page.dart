@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class FairShareHomePage extends StatefulWidget {
+  const FairShareHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<FairShareHomePage> createState() => _FairShareHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FairShareHomePageState extends State<FairShareHomePage> {
   final TextEditingController _amountController = TextEditingController();
   // Ajout d'un FocusNode pour gérer le focus du champ de texte
   final FocusNode _amountFocusNode = FocusNode();

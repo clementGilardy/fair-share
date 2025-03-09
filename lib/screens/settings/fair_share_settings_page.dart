@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class FairShareSettingsPage extends StatefulWidget {
+  const FairShareSettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  State<FairShareSettingsPage> createState() => _FairShareSettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _FairShareSettingsPageState extends State<FairShareSettingsPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _revenu1Controller = TextEditingController();
   final TextEditingController _revenu2Controller = TextEditingController();
@@ -121,7 +121,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paramètres'),
+        title: const Text('Fair Share - Paramètres'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: _isLoading
