@@ -22,6 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
   final FocusNode _focus1 = FocusNode();
   final FocusNode _focus2 = FocusNode();
 
+  // Ajout d'un indicateur de chargement
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -75,12 +78,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _loadSavedValues() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _revenu1Controller.text = (prefs.getDouble('revenu1') ?? 0).toString();
-      _revenu2Controller.text = (prefs.getDouble('revenu2') ?? 0).toString();
-      _originalRevenu1 = _revenu1Controller.text;
-      _originalRevenu2 = _revenu2Controller.text;
-    });
+
+    // Préparer les valeurs avant de mettre à jour l'état
+    final revenu1 = (prefs.getDouble('revenu1') ?? 0).toString();
+    final revenu2 = (prefs.getDouble('revenu2') ?? 0).toString();
+
+    // Mettre à jour les contrôleurs
+    _revenu1Controller.text = revenu1;
+    _revenu2Controller.text = revenu2;
+
+    _originalRevenu1 = revenu1;
+    _originalRevenu2 = revenu2;
+
+    // Indiquer que le chargement est terminé
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> _saveValues() async {
@@ -109,7 +124,9 @@ class _SettingsPageState extends State<SettingsPage> {
         title: const Text('Paramètres'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Padding(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
