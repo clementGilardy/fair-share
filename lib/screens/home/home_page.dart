@@ -13,6 +13,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _amountController = TextEditingController();
+  // Ajout d'un FocusNode pour gérer le focus du champ de texte
+  final FocusNode _amountFocusNode = FocusNode();
   double _revenu1 = 0;
   double _revenu2 = 0;
   double _montantConjoint1 = 0;
@@ -28,6 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     _amountController.dispose();
+    // Ne pas oublier de libérer le FocusNode
+    _amountFocusNode.dispose();
     super.dispose();
   }
 
@@ -96,14 +100,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 16),
-                    TextFormField(
+                    // Utilisation d'un TextField à l'intérieur d'un widget TextFieldTapRegion
+                    // pour gérer l'action du bouton "Valider" du clavier
+                    TextField(
                       controller: _amountController,
+                      focusNode: _amountFocusNode,
                       decoration: const InputDecoration(
                         labelText: 'Montant à répartir',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.euro),
                       ),
                       keyboardType: TextInputType.number,
+                      // Configuration pour exécuter l'action lorsque le bouton "Valider" du clavier est pressé
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _calculateDistribution(),
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                       ],
